@@ -74,7 +74,7 @@ export default {
   },
   methods: {
     onSignup() {
-      console.log(this.email, this.password);
+      console.log();
     }
   }
 };
