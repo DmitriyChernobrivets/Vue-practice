@@ -1,11 +1,16 @@
 <template>
   <v-container>
+    <v-layout row v-if="error">
+      <v-flex xs12 sm6 offset-sm3>
+        <app-alert @dismissed="onDismissed" :text="error"></app-alert>
+      </v-flex>
+    </v-layout>
     <v-layout row>
       <v-flex x12 sm6 offset-sm3>
         <v-card>
           <v-card-text>
             <v-container>
-              <form>
+              <form @submit.prevent="onSignup">
                 <v-layout row>
                   <v-flex xs12>
                     <v-text-field
@@ -44,7 +49,14 @@
                 </v-layout>
                 <v-layout row>
                   <v-flex xs12>
-                    <v-btn type="submit">Sign Up</v-btn>
+                    <v-btn type="submit" :disabled="loading" :loading="loading">
+                      Sign Up
+                      <template v-slot:loader>
+                        <span class="custom-loader">
+                          <v-icon light>cached</v-icon>
+                        </span>
+                      </template>
+                    </v-btn>
                   </v-flex>
                 </v-layout>
               </form>
@@ -58,23 +70,46 @@
 
 <script>
 export default {
-  date() {
+  data() {
     return {
       password: "",
       email: "",
-      confirmPasword: ""
+      confirmPassword: ""
     };
   },
   computed: {
     comparePasswords() {
-      return this.password !== this.confirmPasword
+      return this.password !== this.confirmPassword
         ? "Password do not match"
         : "";
+    },
+    loading() {
+      return this.$store.getters.loading;
+    },
+    error() {
+      return this.$store.getters.error;
+    },
+    user() {
+      return this.$store.getters.user;
+    }
+  },
+  watch: {
+    user(value) {
+      if (value !== null && value !== undefined) {
+        this.$router.push("/");
+      }
     }
   },
   methods: {
     onSignup() {
-      console.log();
+      this.$store.dispatch("signUserUp", {
+        email: this.email,
+        password: this.password
+      });
+    },
+    onDismissed() {
+      console.log("dissmesed");
+      this.$store.dispatch("clearError");
     }
   }
 };

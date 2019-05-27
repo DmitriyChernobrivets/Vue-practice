@@ -6,7 +6,7 @@
           <v-container fluid>
             <v-layout row>
               <v-flex 3 xs5 sm4 md>
-                <v-card-media :src="meetup.imageUrl" height="135px"></v-card-media>
+                <v-img :src="meetup.imageUrl" height="135px"></v-img>
               </v-flex>
               <v-flex xs7 sm8 md9>
                 <v-card-title primary-title>
@@ -39,5 +39,44 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
+.custom-loader {
+  animation: loader 1s infinite;
+  display: flex;
+}
+@-moz-keyframes loader {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+@-webkit-keyframes loader {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+@-o-keyframes loader {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes loader {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+.v-progress-circular {
+  margin: 1rem;
+}
 </style>

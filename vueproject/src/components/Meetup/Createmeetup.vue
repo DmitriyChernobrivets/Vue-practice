@@ -34,14 +34,14 @@
           </v-layout>
           <v-layout row>
             <v-flex xs12 sm6 offset-sm3>
-              <v-text-field
-                v-model="imageUrl"
-                color="error"
-                name="imageUrl"
-                label="Image URL*"
-                id="image-url"
-                required
-              ></v-text-field>
+              <v-btn raised class="error" @click="onPickFile">Upload Image</v-btn>
+              <input
+                type="file"
+                style="display: none"
+                ref="fileInput"
+                accept="image/*"
+                @change="onFilePicked"
+              >
             </v-flex>
           </v-layout>
           <v-layout row>
@@ -97,7 +97,8 @@ export default {
       imageUrl: "",
       description: "",
       date: new Date().toISOString().substr(0, 10),
-      time: new Date()
+      time: new Date(),
+      image: null
     };
   },
   computed: {
@@ -128,18 +129,35 @@ export default {
   },
   methods: {
     onCreateMeetUp() {
-      if (!this.formIsValid) {
+      if (!this.formIsValid && !this.image) {
         return;
       }
       const meetupData = {
         title: this.title,
         location: this.location,
-        imageUrl: this.imageUrl,
+        image: this.image,
         description: this.description,
         date: this.submittableDateTime
       };
-      this.$store.dispatch("CreateMeetUp", meetupData);
+      this.$store.dispatch("createMeetUp", meetupData);
       this.$router.push("/meetups");
+    },
+    onPickFile() {
+      this.$refs.fileInput.click();
+    },
+    onFilePicked(event) {
+      const files = event.target.files;
+      const filename = files[0].name;
+      if (filename.lastIndexOf(".") <= 0) {
+        return alert("Please add a valid file!");
+      }
+
+      const fileReader = new FileReader();
+      fileReader.addEventListener("load", () => {
+        this.imageUrl = fileReader.result;
+      });
+      fileReader.readAsDataURL(files[0]);
+      this.image = files[0];
     }
   }
 };

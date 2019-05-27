@@ -1,11 +1,14 @@
 import Vue from "vue";
 import App from "./App";
-import router from "./router";
+import router from "./router/router";
 import store from "./store/store";
 import * as firebase from "firebase";
 import Vuetify from "vuetify";
 import filterDate from "./filters/date";
 import "vuetify/dist/vuetify.min.css";
+import AlertCmp from "./components/shared/alert.vue";
+import EditMeetUpDetails from "./components/Meetup/Edit/EditMeetupDetails.vue";
+import EditMeetUpDate from "./components/Meetup/Edit/EditMeetupDate.vue";
 
 Vue.use(Vuetify, {
   theme: {
@@ -18,6 +21,9 @@ Vue.use(Vuetify, {
 
 Vue.config.productionTip = false;
 Vue.filter("dateFilter", filterDate);
+Vue.component("app-alert", AlertCmp);
+Vue.component("app-edit-meetup", EditMeetUpDetails);
+Vue.component("app-edit-meetup-date", EditMeetUpDate);
 
 new Vue({
   router,
@@ -33,5 +39,11 @@ new Vue({
       messagingSenderId: "147769108947",
       appId: "1:147769108947:web:832032d0cbc571db"
     });
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        this.$store.dispatch("autoSignIn", user);
+      }
+    });
+    this.$store.dispatch("loadMeetups");
   }
 }).$mount("#app");
