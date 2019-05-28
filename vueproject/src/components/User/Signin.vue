@@ -60,7 +60,7 @@
 
 <script>
 export default {
-  date() {
+  data() {
     return {
       password: "",
       email: ""
@@ -92,7 +92,6 @@ export default {
       });
     },
     onDismissed() {
-      console.log("dissmesed");
       this.$store.dispatch("clearError");
     }
   }

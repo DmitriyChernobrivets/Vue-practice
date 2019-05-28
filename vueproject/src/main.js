@@ -9,6 +9,8 @@ import "vuetify/dist/vuetify.min.css";
 import AlertCmp from "./components/shared/alert.vue";
 import EditMeetUpDetails from "./components/Meetup/Edit/EditMeetupDetails.vue";
 import EditMeetUpDate from "./components/Meetup/Edit/EditMeetupDate.vue";
+import EditMeetUpTime from "./components/Meetup/Edit/EditMeetupTime.vue";
+import RegisterDialog from "./components/Meetup/Registration/RegisterDialog.vue";
 
 Vue.use(Vuetify, {
   theme: {
@@ -24,6 +26,8 @@ Vue.filter("dateFilter", filterDate);
 Vue.component("app-alert", AlertCmp);
 Vue.component("app-edit-meetup", EditMeetUpDetails);
 Vue.component("app-edit-meetup-date", EditMeetUpDate);
+Vue.component("app-edit-meetup-time", EditMeetUpTime);
+Vue.component("app-meetup-register-dialog", RegisterDialog);
 
 new Vue({
   router,
@@ -42,6 +46,7 @@ new Vue({
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
         this.$store.dispatch("autoSignIn", user);
+        this.$store.dispatch("fetchUserData");
       }
     });
     this.$store.dispatch("loadMeetups");

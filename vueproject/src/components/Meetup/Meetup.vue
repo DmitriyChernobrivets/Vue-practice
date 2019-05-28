@@ -5,8 +5,8 @@
         <v-progress-circular :width="3" color="red" indeterminate></v-progress-circular>
       </v-flex>
     </v-layout>
-    <v-layout row wrap v-else>
-      <v-flex xs12>
+    <v-layout row wrap v-else justify-center>
+      <v-flex xs12 lg8>
         <v-card>
           <v-card-title>
             <h2 class="error--text">{{meetup.title}}</h2>
@@ -20,12 +20,16 @@
             <div class="info--text">{{meetup.date | dateFilter}} - {{meetup.location}}</div>
             <div>
               <app-edit-meetup-date :meetup="meetup" v-if="userIsCreator"></app-edit-meetup-date>
+              <app-edit-meetup-time :meetup="meetup" v-if="userIsCreator"></app-edit-meetup-time>
             </div>
             <div>{{meetup.description}}.</div>
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn class="error mt-2">Register</v-btn>
+            <app-meetup-register-dialog
+              :meetupId="meetup.id"
+              v-if="userIsAuthticated && !userIsCreator"
+            ></app-meetup-register-dialog>
           </v-card-actions>
         </v-card>
       </v-flex>

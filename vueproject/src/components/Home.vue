@@ -13,7 +13,7 @@
         <v-progress-circular :width="3" color="red" indeterminate v-if="loading"></v-progress-circular>
       </v-flex>
     </v-layout>
-    <v-layout row wrap justify-center v-if="!loading">
+    <v-layout row wrap v-if="!loading" justify-center>
       <v-flex xs12 sm6>
         <v-carousel style="cursor: pointer">
           <v-carousel-item

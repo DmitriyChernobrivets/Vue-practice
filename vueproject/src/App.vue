@@ -55,8 +55,7 @@ export default {
       if (this.userisAuthenticated) {
         menuItems = [
           { icon: "accessibility", title: "View Meetups", link: "/meetups" },
-          { icon: "room", title: "Organize Meetup", link: "/meetup/new" },
-          { icon: "person", title: "Profile", link: "/profile" }
+          { icon: "room", title: "Organize Meetup", link: "/meetup/new" }
         ];
       }
       return menuItems;

@@ -67,11 +67,11 @@
               <h2>Choose Data</h2>
             </v-flex>
           </v-layout>
-          <v-layout row wrap class="mb-2" justify-center>
-            <v-flex xs12 sm6 style="text-align: center;">
+          <v-layout row wrap class="mb-2">
+            <v-flex xs12 sm12 style="display: flex" justify-center class="mb-3">
               <v-date-picker v-model="date" color="green lighten-1"></v-date-picker>
             </v-flex>
-            <v-flex xs12 sm6 style="text-align: center;">
+            <v-flex xs12 sm12 style="display: flex" justify-center>
               <v-time-picker v-model="time" color="green lighten-1"></v-time-picker>
             </v-flex>
           </v-layout>
